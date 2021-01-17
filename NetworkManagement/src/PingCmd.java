@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,13 +26,13 @@ public class PingCmd extends HttpServlet {
 		if(command != null) {
 		Process process;
 		switch(command) {
-			case "ping": process = Runtime.getRuntime().exec("ping "+request.getParameter("pingurl")); break;
-			case "tracert": process = Runtime.getRuntime().exec("tracert "+request.getParameter("tracerturl")); break;
-			case "nslookup": process = Runtime.getRuntime().exec("nslookup "+request.getParameter("nslookupurl")); break;
-			case "pathping": process = Runtime.getRuntime().exec("pathping "+request.getParameter("pathpingurl")); break;
-			case "ipconfig": process = Runtime.getRuntime().exec("ipconfig"); break;
-			case "getmac": process = Runtime.getRuntime().exec("getmac"); break;
-			case "netstat": process = Runtime.getRuntime().exec("netstat"); break;
+			case "ping": process = Runtime.getRuntime().exec("ping "+" "+request.getParameter("options1")+" "+request.getParameter("pingurl")); break;
+			case "tracert": process = Runtime.getRuntime().exec("tracert "+" "+request.getParameter("options2")+" "+request.getParameter("tracerturl")); break;
+			case "nslookup": process = Runtime.getRuntime().exec("nslookup "+" "+request.getParameter("options3")+" "+request.getParameter("nslookupurl")); break;
+			case "pathping": process = Runtime.getRuntime().exec("pathping "+" "+request.getParameter("options4")+" "+request.getParameter("pathpingurl")); break;
+			case "ipconfig": process = Runtime.getRuntime().exec("ipconfig"+" "+request.getParameter("options5")); break;
+			case "getmac": process = Runtime.getRuntime().exec("getmac"+" "+request.getParameter("options6")); break;
+			case "netstat": process = Runtime.getRuntime().exec("netstat"+" "+request.getParameter("options7")); break;
 			default: process = null;
 		}
 		
@@ -48,8 +49,9 @@ public class PingCmd extends HttpServlet {
 	   // op = op.replace("%","percent");
 
 		}
-        System.out.println("op: "+op);
-		response.sendRedirect("index.jsp?done="+op);
+		System.out.println("options:  "+request.getParameter("options1"));
+        System.out.println("op: "+op);  
+		response.sendRedirect("home.jsp?done="+op);
 		
 	}
 
